@@ -1,0 +1,69 @@
+---
+#title: "IntroToConfidenceIntervals"
+#author: "ThomasHughes"
+#date: "6/9/2019"
+#output: html_document
+---
+# A Brief Introduction to Confidence Intervals
+
+## Mean Estimation with known $\sigma$
+Suppose $X$ is a random variable with unknown mean $\mu$ and known variance $\sigma^2$ from which we take independent random samples $X_1, X_2, \ldots, X_n$. While we cannot say what the exact value of $\mu$ is, we can make an educated guess of its whereabouts.
+
+If we take an arbitrary open interval $I$ about a realization of $\overline{X}_n$, then either $\mu \in I$ or $\mu \in I^c$. Some realizations of $\overline{X}_n$ will admit $\mu \in I$ and others will admit $\mu \in I^c$. Containment also depends on how large the interval $I$ is; the larger the interval, the easier it is to have containment. But $\overline{X}_n$ being a random variable also means that there is a probability that $\mu \in I$. Perhaps we can find it. 
+
+Recall that the Central Limit Theorem tells us that 
+
+$$
+\overline{X}_n \overset{d}{\rightarrow} \mathcal{N}\left(\mu, \frac{\sigma}{\sqrt{n}}\right)
+$$
+
+This implies that $\frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}}$ is a standard normal random variable. Thus, given $\alpha < 0.5$ (typically 0.05 or 0.01), we can solve
+
+$$\mathbb{P}\left(  \left| \frac{\overline{X}_n-\mu}{\frac{\sigma}{\sqrt{n}}}  \right| < z \right) = 1-\alpha$$
+
+
+for $z$. First we compute
+
+\begin{align*}
+\mathbb{P}\left( \frac{\overline{X}_n-\mu}{\frac{\sigma}{\sqrt{n}}} < z_{\alpha/2} \right) &= 1-\frac{\alpha}{2} \\
+\Phi(z_{\alpha/2}) &= 1-\frac{\alpha}{2} \\
+z_{\alpha/2} &= \Phi^{-1}\left( 1-\frac{\alpha}{2} \right)
+\end{align*}
+
+so that, by symmetry, we get
+
+$$
+\mathbb{P}\left( \frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} < -z_{\alpha/2}  \right) = \frac{\alpha}{2}
+$$
+
+Thus
+
+\begin{align*}
+  \mathbb{P}\left(  \left| \frac{\overline{X}_n-\mu}{\frac{\sigma}{\sqrt{n}}}  \right| < z_{\alpha/2} \right) &= \mathbb{P}\left( -z_{\alpha/2} < \frac{\overline{X}_n-\mu}{\frac{\sigma}{\sqrt{n}}} < z_{\alpha/2} \right) \\
+  &= \Phi(z_{\alpha/2})-\Phi(-z_{\alpha/2}) \\
+  &= 1-\frac{\alpha}{2}-\frac{\alpha}{2} \\
+  &= 1-\alpha
+\end{align*}
+
+which implies that $z=z_{\alpha/2}$. Rearranging the argument from the first line gives us that
+
+$$
+\mathbb{P}\left( \overline{X}_n-z_{\alpha/2}\frac{\sqrt{n}}{\sigma} < \mu < \overline{X}_n+z_{\alpha/2}\frac{\sqrt{n}}{\sigma} \right) = 1-\alpha
+$$
+
+So, for example, if $1-\alpha=0.95$ then $z_{\alpha/2} = \Phi^{-1}(1-\frac{0.95}{2}) \approx 1.96$. Given $\overline{X}_n, n$, and $\sigma$ we can compute the interval
+
+$$
+I = \left( \overline{X}_n-z_{\alpha/2}\frac{\sqrt{n}}{\sigma}, \overline{X}_n+z_{\alpha/2}\frac{\sqrt{n}}{\sigma}  \right)
+$$
+and can say
+
+$$
+\mathbb{P}(\mu \in I) = 0.95
+$$
+
+Observe that this also means that 
+
+$$
+\mathbb{P}\left( \mu \in Closure(I) \right) = 0.95
+$$
